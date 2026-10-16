@@ -5,7 +5,7 @@ import { readFileSync, writeFileSync, mkdirSync, readdirSync, cpSync, rmSync } f
 const NAV = [
   ["rooms", "/rooms", "Suites"],
   ["dining", "/dining", "Dining"],
-  ["spa", "/spa", "The Brine Spa"],
+  ["spa", "/spa", "Spa"],
   ["story", "/story", "Our Story"],
 ];
 
@@ -14,13 +14,13 @@ const header = (active, solid) => `
   <div class="wrap nav">
     <a class="brand" href="/" aria-label="La Kimchi home">
       <span class="mark">La Kimchi</span>
-      <span class="stars">★★★★★★★</span>
+      <span class="stars">★★★★★</span>
     </a>
     <ul>
       ${NAV.map(([k, href, label]) => `<li><a href="${href}"${k === active ? ' aria-current="page"' : ""}>${label}</a></li>`).join("\n      ")}
       <li><a href="/reserve"${active === "reserve" ? ' aria-current="page"' : ""}>Reserve</a></li>
     </ul>
-    <a class="btn" href="/reserve">Book Your Fermentation</a>
+    <a class="btn" href="/reserve">Book Now</a>
     <button class="menu-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>`;
@@ -30,9 +30,9 @@ const footer = `
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <a class="brand" href="/"><span class="mark">La Kimchi</span><span class="stars">★★★★★★★</span></a>
-        <p>Rue de la Fermentation 7, Seoul-sur-Mer.<br />An establishment of uncompromising luxury and moderate pungency.</p>
-        <p class="fine">Seven stars, self-awarded. Pending review by any recognised authority.</p>
+        <a class="brand" href="/"><span class="mark">La Kimchi</span><span class="stars">★★★★★</span></a>
+        <p>27 Bukchon-ro, Jongno-gu<br />Seoul, Republic of Korea</p>
+        <p class="fine">A five-star hotel celebrating Korean craft, cuisine and hospitality.</p>
       </div>
       <div>
         <h5>Explore</h5>
@@ -41,14 +41,14 @@ const footer = `
       <div>
         <h5>Concierge</h5>
         <ul>
-          <li><a href="tel:+0000000000">+82 KIM CHI 0000</a></li>
+          <li><a href="tel:+8220000000">+82 2 000 0000</a></li>
           <li><a href="mailto:concierge@la-kimchi.example">concierge@la-kimchi.example</a></li>
-          <li>Open 24 hours.<br />Fermenting 24/7.</li>
+          <li>Available 24 hours a day</li>
         </ul>
       </div>
       <div>
-        <h5>The Brine List</h5>
-        <p>Rare offers, delivered at the peak of sourness.</p>
+        <h5>Newsletter</h5>
+        <p>Seasonal offers and news from La Kimchi.</p>
         <form class="newsletter">
           <input type="email" required placeholder="Your email" aria-label="Email address" />
           <button type="submit">Subscribe</button>
@@ -56,8 +56,8 @@ const footer = `
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© <span id="yr">2026</span> La Kimchi Hotels &amp; Jars. A work of fiction. No cabbages were harmed. Several were transformed.</span>
-      <span>Privacy · Terms · Allergen Disclosure (it's garlic)</span>
+      <span>© <span id="yr">2026</span> La Kimchi Hotels. All rights reserved.</span>
+      <span>Privacy Policy · Terms of Use · Accessibility</span>
     </div>
   </div>
 </footer>`;
@@ -100,8 +100,8 @@ for (const file of readdirSync("src/pages")) {
       .filter((p) => p[0])
   );
   const content = m ? src.slice(m[0].length) : src;
-  const title = meta.title ? `${meta.title} — La Kimchi` : "La Kimchi — A Seven-Star Fermentation Experience";
-  const desc = meta.desc || "La Kimchi: the world's most exclusive hotel, aged to perfection.";
+  const title = meta.title ? `${meta.title} — La Kimchi` : "La Kimchi — Luxury Hotel in Seoul";
+  const desc = meta.desc || "La Kimchi: a five-star luxury hotel in Seoul.";
   const body = header(meta.nav, meta.hero === "solid") + "\n<main>\n" + content + "\n</main>\n" + footer;
   writeFileSync(`dist/${file}`, shell(title, desc, body));
   console.log("built", file);

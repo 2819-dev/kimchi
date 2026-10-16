@@ -65,7 +65,7 @@
     f.addEventListener("submit", (e) => {
       e.preventDefault();
       f.reset();
-      toast("Welcome to The Brine List. Your first dispatch will arrive once it has fermented (6–8 weeks).");
+      toast("Thank you for subscribing. You'll hear from us soon.");
     })
   );
 
