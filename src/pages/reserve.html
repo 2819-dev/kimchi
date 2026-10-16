@@ -1,0 +1,95 @@
+<!-- title: Reservations | nav: reserve | hero: solid | desc: Reserve your fermentation at La Kimchi. -->
+<section class="tint" style="padding-top: 160px">
+  <div class="wrap split" style="align-items: start">
+    <div class="reveal">
+      <span class="eyebrow">Reservations</span>
+      <h2>Begin your fermentation.</h2>
+      <p>Please complete the form below. Our reservations team will review your application, assess your flavour profile, and respond in 3–6 weeks, depending on ambient temperature.</p>
+      <p>All stays include:</p>
+      <ul>
+        <li>Arrival salting ceremony</li>
+        <li>Daily burp service</li>
+        <li>One commemorative onggi jar (shipping: not our problem)</li>
+        <li>Lifelong faint smell of garlic</li>
+      </ul>
+      <p class="fine">Cancellation policy: once sealed, the jar may not be opened early. We're sure you understand.</p>
+    </div>
+
+    <form class="booking reveal" id="booking">
+      <div class="row">
+        <div class="field"><label for="arrive">Arrival</label><input type="date" id="arrive" required /></div>
+        <div class="field"><label for="nights">Fermentation period</label>
+          <select id="nights">
+            <option value="21">3 weeks — Fresh (geotjeori)</option>
+            <option value="42" selected>6 weeks — Perfectly ripe</option>
+            <option value="90">3 months — Assertive</option>
+            <option value="365">1 year — Mukeunji (legally binding)</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label for="suite">Suite</label>
+        <select id="suite">
+          <option value="1900000">The Napa Classic — ₩1,900,000</option>
+          <option value="3400000">Kkakdugi Cube Suite — ₩3,400,000</option>
+          <option value="6800000">The Baek Kimchi Suite — ₩6,800,000</option>
+          <option value="0">The Mukeunji Imperial Penthouse — price upon fermentation</option>
+        </select>
+      </div>
+      <div class="row">
+        <div class="field"><label for="name">Full name</label><input id="name" required autocomplete="name" /></div>
+        <div class="field"><label for="email">Email</label><input type="email" id="email" required autocomplete="email" /></div>
+      </div>
+      <div class="field"><label for="spice">Preferred spice level</label>
+        <input type="range" id="spice" min="0" max="5" value="2" />
+        <span class="fine" id="spiceLabel"></span>
+      </div>
+      <div class="field"><label for="notes">Special requests</label><textarea id="notes" rows="3" placeholder="e.g. extra fish sauce, a pillow that is not a cabbage"></textarea></div>
+      <label class="check"><input type="checkbox" id="salt" checked /> I consent to being salted upon arrival.</label>
+      <label class="check"><input type="checkbox" id="cucumber" /> I am a cucumber and would like the oi-sobagi package (+15%).</label>
+      <label class="check"><input type="checkbox" required /> I understand La Kimchi is not a real hotel.</label>
+      <div class="total"><span>Estimated total</span><strong id="total">—</strong></div>
+      <button class="btn solid" type="submit" style="width: 100%">Request Reservation</button>
+    </form>
+  </div>
+</section>
+
+<div class="modal" id="confirm" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+  <div class="box">
+    <span class="eyebrow">Jar sealed</span>
+    <h3 id="confirmTitle">Thank you, <span id="cName"></span>.</h3>
+    <p>Your reservation request is now fermenting. Please keep this confirmation code somewhere cool and dark:</p>
+    <code id="cCode"></code>
+    <p class="fine">No booking has actually been made, because La Kimchi does not exist. But it was lovely to imagine, wasn't it?</p>
+    <button class="btn dark" id="closeModal">Return to the lobby</button>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const $ = (id) => document.getElementById(id);
+    const spiceNames = ["Baek (no chili at all)", "A rumour of chili", "Polite", "Assertive", "Regrettable", "Call the embassy"];
+    const won = (n) => "₩ " + Math.round(n).toLocaleString("en-US");
+    const arrive = $("arrive");
+    arrive.min = new Date().toISOString().slice(0, 10);
+
+    function update() {
+      $("spiceLabel").textContent = spiceNames[$("spice").value];
+      const rate = +$("suite").value;
+      if (!rate) { $("total").textContent = "Price upon fermentation"; return; }
+      let total = rate * +$("nights").value;
+      if ($("cucumber").checked) total *= 1.15;
+      $("total").textContent = won(total);
+    }
+    ["suite", "nights", "spice", "cucumber"].forEach((id) => $(id).addEventListener("input", update));
+    update();
+
+    $("booking").addEventListener("submit", (e) => {
+      e.preventDefault();
+      $("cName").textContent = $("name").value.split(" ")[0] || "honoured guest";
+      $("cCode").textContent = "KC-" + Math.random().toString(36).slice(2, 8).toUpperCase();
+      $("confirm").classList.add("open");
+      $("closeModal").focus();
+    });
+    $("closeModal").addEventListener("click", () => { location.href = "/"; });
+  })();
+</script>
