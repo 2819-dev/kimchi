@@ -3,10 +3,10 @@
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, cpSync, rmSync } from "node:fs";
 
 const NAV = [
-  ["rooms", "/rooms", "Suites"],
+  ["rooms", "/rooms", "Rooms"],
   ["dining", "/dining", "Dining"],
   ["spa", "/spa", "Spa"],
-  ["story", "/story", "Our Story"],
+  ["story", "/story", "About"],
 ];
 
 const header = (active, solid) => `
@@ -18,7 +18,7 @@ const header = (active, solid) => `
     </a>
     <ul>
       ${NAV.map(([k, href, label]) => `<li><a href="${href}"${k === active ? ' aria-current="page"' : ""}>${label}</a></li>`).join("\n      ")}
-      <li><a href="/reserve"${active === "reserve" ? ' aria-current="page"' : ""}>Reserve</a></li>
+      <li><a href="/reserve"${active === "reserve" ? ' aria-current="page"' : ""}>Book</a></li>
     </ul>
     <a class="btn" href="/reserve">Book Now</a>
     <button class="menu-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -32,11 +32,11 @@ const footer = `
       <div>
         <a class="brand" href="/"><span class="mark">La Kimchi</span><span class="stars">★★★★★</span></a>
         <p>27 Bukchon-ro, Jongno-gu<br />Seoul, Republic of Korea</p>
-        <p class="fine">A five-star hotel celebrating Korean craft, cuisine and hospitality.</p>
+        <p class="fine">A five-star hotel in central Seoul.</p>
       </div>
       <div>
         <h5>Explore</h5>
-        <ul>${NAV.map(([, href, label]) => `<li><a href="${href}">${label}</a></li>`).join("")}<li><a href="/reserve">Reservations</a></li></ul>
+        <ul>${NAV.map(([, href, label]) => `<li><a href="${href}">${label}</a></li>`).join("")}<li><a href="/reserve">Book a Room</a></li></ul>
       </div>
       <div>
         <h5>Concierge</h5>

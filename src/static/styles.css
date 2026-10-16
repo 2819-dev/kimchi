@@ -258,3 +258,17 @@ footer .brand { align-items: flex-start; color: var(--cream); margin-bottom: 18p
   font-size: .9rem; transition: transform .5s; max-width: calc(100% - 32px); text-align: center;
 }
 .toast.show { transform: translate(-50%, 0); }
+
+/* ---------- photos ---------- */
+.photo { position: relative; overflow: hidden; aspect-ratio: 4 / 5; background: var(--cream-2); }
+.photo img { width: 100%; height: 100%; object-fit: cover; }
+.card .photo { aspect-ratio: 3 / 2; }
+.hero.image { background: #1a0f0d; }
+.hero.image > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; }
+.hero.image::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(18,9,7,.55), rgba(18,9,7,.25) 40%, rgba(18,9,7,.7)); }
+.facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center; }
+.facts strong { display: block; font-family: var(--serif); font-size: 2.6rem; font-weight: 500; color: var(--chili); line-height: 1.1; }
+.facts span { font-size: .85rem; color: var(--muted); }
+@media (max-width: 700px) { .facts { grid-template-columns: 1fr 1fr; } }
+.info-list { list-style: none; padding: 0; margin: 0 0 1.6rem; }
+.info-list li { padding: 10px 0; border-bottom: 1px solid rgba(26, 15, 13, .1); }
